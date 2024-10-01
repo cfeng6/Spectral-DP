@@ -7,8 +7,6 @@ Torch 1.8.1 + cuda 11.6
 
 [Opacus](https://opacus.ai/)
 
-## Datasets and Models
-
 ## Implementation details
 ### Spectral-DP in the Conv2D layer
 `models/conv2d.py` 
