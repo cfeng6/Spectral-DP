@@ -25,7 +25,7 @@ from torchsummary import summary
 from torch.utils.data import Sampler
 from layer_config import DEVICE, SIGMA, FILTER_RATIO, LAYER_BOUND, TOTAL_BOUND
 
-from mlp_mnist import MLP
+from models.mlp_mnist import MLP
 import privacy_budget
 
 from configs import set_arguments
