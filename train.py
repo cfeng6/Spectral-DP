@@ -5,7 +5,7 @@ import numpy as np
 from torch.utils.data import Dataset, DataLoader
 from torchvision import datasets, transforms
 from torchvision.datasets import mnist, CIFAR10
-
+import torchvision
 from torchvision.datasets import MNIST
 
 from torch.autograd import Variable
@@ -26,6 +26,7 @@ from torch.utils.data import Sampler
 from layer_config import DEVICE, SIGMA, FILTER_RATIO, LAYER_BOUND, TOTAL_BOUND
 
 from models.mlp_mnist import MLP
+from models.lenet import LeNet5
 import privacy_budget
 
 from configs import set_arguments
@@ -67,17 +68,29 @@ if not os.path.exists(SAVE_DIR):
 sub_root = os.path.join(args.root)
 
 if args.dataset == 'mnist':
-    transform = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize((0.1307,), (0.3081,)),
-        ])
-    test_transform = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize((0.1307,), (0.3081,)),
-        ])
-    train_dataset = MNIST(os.path.join(sub_root,'train'), train=True,
+    if args.model == 'mlp_mnist':
+        transform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,)),
+            ])
+        test_transform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,)),
+            ])
+    else:
+        transform = transforms.Compose([
+            transforms.Resize((32,32)),
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,)),
+            ])
+        test_transform = transforms.Compose([
+            transforms.Resize((32,32)),
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,)),
+            ])
+    train_dataset = torchvision.datasets.MNIST(os.path.join(sub_root,'train'), train=True,
                               download=True,transform=transform)
-    test_dataset = MNIST(os.path.join(sub_root,'test'), train=False,
+    test_dataset = torchvision.datasets.MNIST(os.path.join(sub_root,'test'), train=False,
                              download=True, transform=test_transform)
 else:
      raise Exception("Not a training dataset")
@@ -95,6 +108,8 @@ test_loader = DataLoader(test_dataset, shuffle=False, batch_size=100)
 
 if args.model == 'mlp_mnist':
     model = MLP(args.block_size).double().to(DEVICE)
+elif args.model == 'lenet_mnist':
+    model = LeNet5(10, args.block_size).double().to(DEVICE)
 else:
     raise Exception("Not a training model")
 

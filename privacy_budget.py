@@ -2,7 +2,7 @@ import torch
 from torch.utils.data import DataLoader
 from torchvision import transforms
 from torchvision.datasets import mnist, CIFAR10
-
+import torchvision
 import torch.optim as optim
 import os
 
@@ -21,7 +21,7 @@ def calculate_sigma(dataset, sub_path, device, epochs, epsilon, train_batch_size
             transforms.Normalize((0.1307,), (0.3081,)),
         ])
     
-    train_dataset = mnist.MNIST(root=os.path.join(sub_path, 'train'), train=True,
+    train_dataset = torchvision.datasets.MNIST(root=os.path.join(sub_path, 'train'), train=True,
                               download=True,transform=transform)
     model = SimpleCNN().double().to(device)
     optimizer = optim.Adam(model.parameters(), lr=0.001)

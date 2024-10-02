@@ -5,7 +5,7 @@ def set_arguments():
     parser = argparse.ArgumentParser("Spectral-DP")
     parser.add_argument('--root', type=str, default='dataset', help='root dir of all datasets')
     parser.add_argument('--dataset', type=str, default='mnist', help='experiment on dataset in [MNIST]')
-    parser.add_argument('--model', type=str, default='mlp_mnist')
+    parser.add_argument('--model', type=str, default='mlp_mnist', help='models in [mlp_mnist, lenet_mnist]')
     parser.add_argument('--train_batch_size', type=int, default=250, help='train batch size')
     parser.add_argument('--learning_rate', type=float, default=0.01, help='init learning rate')
     parser.add_argument('--momentum', type=float, default=0.9, help='momentum')

@@ -34,9 +34,14 @@ Training DP guaranteed models using Spectral-DP.
 MNIST: 4-layer MLP (Model-1 in [Spectral-DP](https://arxiv.org/pdf/2307.13231))
 
 ```
-python train.py --dataset mnist --model mlp_mnist --train_batch_size 250 --epochs 30
+python train.py --dataset mnist --model mlp_mnist --train_batch_size 250 --learning_rate 0.01 --epochs 30 --max_grad_norm 0.35 --epsilon 2.0
 ```
 
+MNIST: LeNet-5
+
+```
+python train.py --dataset mnist --model lenet_mnist --train_batch_size 500 --learning_rate 0.001 --epochs 30 --max_grad_norm 0.5 --epsilon 2.0
+```
 ## Citations
 ```
 @inproceedings{feng2023spectral,
