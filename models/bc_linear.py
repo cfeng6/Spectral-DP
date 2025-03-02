@@ -42,7 +42,7 @@ def PAD_noise_fc(w, x, k_value, sigma, bound, batch_size):
 
     noise = real_noise + 1j * imag_noise
     fft_data[:, :, 0:k_value] = fft_data[:, :, 0:k_value] + noise / batch_size
-    fft_data[:, :, k_value:-1] = 0.
+    fft_data[:, :, k_value:] = 0.
 
     return torch.fft.ifft(fft_data, norm="ortho").float()
 
